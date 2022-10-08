@@ -1,5 +1,7 @@
 #!/bin/sh
 # ./ry.sh start 启动 stop 停止 restart 重启 status 状态
+#  这个就是我今天写的代码
+# 今天晚上加班写的代码
 AppName=ruoyi-admin.jar
 
 # JVM参数
