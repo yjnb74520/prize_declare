@@ -1,6 +1,6 @@
 #!/bin/sh
 # ./ry.sh start 启动 stop 停止 restart 重启 status 状态
-#saaaa
+
 AppName=ruoyi-admin.jar
 
 # JVM参数
