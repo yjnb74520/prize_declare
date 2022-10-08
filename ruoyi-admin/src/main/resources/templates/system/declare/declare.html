@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" xmlns:shiro="http://www.pollix.at/thymeleaf/shiro">
+<head>
+    <th:block th:include="include :: header('参赛申报列表')" />
+</head>
+<body class="gray-bg">
+     <div class="container-div">
+        <div class="row">
+            <div class="col-sm-12 search-collapse">
+                <form id="formId">
+                    <div class="select-list">
+                        <ul>
+                            <li>
+                                <label>申请人ID：</label>
+                                <input type="text" name="applicantId"/>
+                            </li>
+                            <li>
+                                <label>申请部门：</label>
+                                <input type="text" name="applicantDept"/>
+                            </li>
+                            <li>
+                                <label>赛项名称：</label>
+                                <input type="text" name="matchName"/>
+                            </li>
+                            <li>
+                                <label>竞赛类别;字典：</label>
+                                <input type="text" name="competitionCategory"/>
+                            </li>
+                            <li>
+                                <label>竞赛等级;字典：</label>
+                                <input type="text" name="competitionLeve"/>
+                            </li>
+                            <li>
+                                <label>所属专业群ID;字典：</label>
+                                <input type="text" name="professionalId"/>
+                            </li>
+                            <li>
+                                <label>承办单位：</label>
+                                <input type="text" name="undertaker"/>
+                            </li>
+                            <li>
+                                <label>参赛地点：</label>
+                                <input type="text" name="contestAddress"/>
+                            </li>
+                            <li>
+                                <label>参赛预估金额：</label>
+                                <input type="text" name="estimateAmount"/>
+                            </li>
+                            <li>
+                                <label>所属课程;多选??：</label>
+                                <input type="text" name="ascriptionCurriculum"/>
+                            </li>
+                            <li>
+                                <label>比赛时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择比赛时间" name="matchTime"/>
+                            </li>
+                            <li>
+                                <label>初赛申请审批意见：</label>
+                                <input type="text" name="processOpinion"/>
+                            </li>
+                            <li>
+                                <label>流程ID(状态);字典：</label>
+                                <input type="text" name="processId"/>
+                            </li>
+                            <li>
+                                <label>租户号：</label>
+                                <input type="text" name="tenantId"/>
+                            </li>
+                            <li>
+                                <label>乐观锁：</label>
+                                <input type="text" name="revision"/>
+                            </li>
+                            <li>
+                                <label>创建人：</label>
+                                <input type="text" name="createdBy"/>
+                            </li>
+                            <li>
+                                <label>创建时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择创建时间" name="createdTime"/>
+                            </li>
+                            <li>
+                                <label>更新人：</label>
+                                <input type="text" name="updatedBy"/>
+                            </li>
+                            <li>
+                                <label>更新时间：</label>
+                                <input type="text" class="time-input" placeholder="请选择更新时间" name="updatedTime"/>
+                            </li>
+                            <li>
+                                <a class="btn btn-primary btn-rounded btn-sm" onclick="$.table.search()"><i class="fa fa-search"></i>&nbsp;搜索</a>
+                                <a class="btn btn-warning btn-rounded btn-sm" onclick="$.form.reset()"><i class="fa fa-refresh"></i>&nbsp;重置</a>
+                            </li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+
+            <div class="btn-group-sm" id="toolbar" role="group">
+                <a class="btn btn-success" onclick="$.operate.add()" shiro:hasPermission="system:declare:add">
+                    <i class="fa fa-plus"></i> 添加
+                </a>
+                <a class="btn btn-primary single disabled" onclick="$.operate.edit()" shiro:hasPermission="system:declare:edit">
+                    <i class="fa fa-edit"></i> 修改
+                </a>
+                <a class="btn btn-danger multiple disabled" onclick="$.operate.removeAll()" shiro:hasPermission="system:declare:remove">
+                    <i class="fa fa-remove"></i> 删除
+                </a>
+                <a class="btn btn-warning" onclick="$.table.exportExcel()" shiro:hasPermission="system:declare:export">
+                    <i class="fa fa-download"></i> 导出
+                </a>
+            </div>
+            <div class="col-sm-12 select-table table-striped">
+                <table id="bootstrap-table"></table>
+            </div>
+        </div>
+    </div>
+    <th:block th:include="include :: footer" />
+    <script th:inline="javascript">
+        var editFlag = [[${@permission.hasPermi('system:declare:edit')}]];
+        var removeFlag = [[${@permission.hasPermi('system:declare:remove')}]];
+        var prefix = ctx + "system/declare";
+
+        $(function() {
+            var options = {
+                url: prefix + "/list",
+                createUrl: prefix + "/add",
+                updateUrl: prefix + "/edit/{id}",
+                removeUrl: prefix + "/remove",
+                exportUrl: prefix + "/export",
+                modalName: "参赛申报",
+                columns: [{
+                    checkbox: true
+                },
+                {
+                    field: 'declareId',
+                    title: '申报ID',
+                    visible: false
+                },
+                {
+                    field: 'applicantId',
+                    title: '申请人ID'
+                },
+                {
+                    field: 'applicantDept',
+                    title: '申请部门'
+                },
+                {
+                    field: 'matchName',
+                    title: '赛项名称'
+                },
+                {
+                    field: 'competitionCategory',
+                    title: '竞赛类别;字典'
+                },
+                {
+                    field: 'competitionLeve',
+                    title: '竞赛等级;字典'
+                },
+                {
+                    field: 'professionalId',
+                    title: '所属专业群ID;字典'
+                },
+                {
+                    field: 'undertaker',
+                    title: '承办单位'
+                },
+                {
+                    field: 'contestAddress',
+                    title: '参赛地点'
+                },
+                {
+                    field: 'estimateAmount',
+                    title: '参赛预估金额'
+                },
+                {
+                    field: 'ascriptionCurriculum',
+                    title: '所属课程;多选??'
+                },
+                {
+                    field: 'matchTime',
+                    title: '比赛时间'
+                },
+                {
+                    field: 'processOpinion',
+                    title: '初赛申请审批意见'
+                },
+                {
+                    field: 'processId',
+                    title: '流程ID(状态);字典'
+                },
+                {
+                    field: 'tenantId',
+                    title: '租户号'
+                },
+                {
+                    field: 'revision',
+                    title: '乐观锁'
+                },
+                {
+                    field: 'createdBy',
+                    title: '创建人'
+                },
+                {
+                    field: 'createdTime',
+                    title: '创建时间'
+                },
+                {
+                    field: 'updatedBy',
+                    title: '更新人'
+                },
+                {
+                    field: 'updatedTime',
+                    title: '更新时间'
+                },
+                {
+                    title: '操作',
+                    align: 'center',
+                    formatter: function(value, row, index) {
+                        var actions = [];
+                        actions.push('<a class="btn btn-success btn-xs ' + editFlag + '" href="javascript:void(0)" onclick="$.operate.edit(\'' + row.declareId + '\')"><i class="fa fa-edit"></i>编辑</a> ');
+                        actions.push('<a class="btn btn-danger btn-xs ' + removeFlag + '" href="javascript:void(0)" onclick="$.operate.remove(\'' + row.declareId + '\')"><i class="fa fa-remove"></i>删除</a>');
+                        return actions.join('');
+                    }
+                }]
+            };
+            $.table.init(options);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.declare.mapper.PrizeDeclareMapper">
+    
+    <resultMap type="PrizeDeclare" id="PrizeDeclareResult">
+        <result property="declareId"    column="declare_id"    />
+        <result property="applicantId"    column="applicant_id"    />
+        <result property="applicantDept"    column="applicant_dept"    />
+        <result property="matchName"    column="match_name"    />
+        <result property="competitionCategory"    column="competition_category"    />
+        <result property="competitionLeve"    column="competition_leve"    />
+        <result property="professionalId"    column="professional_id"    />
+        <result property="undertaker"    column="undertaker"    />
+        <result property="contestAddress"    column="contest_address"    />
+        <result property="estimateAmount"    column="estimate_amount"    />
+        <result property="ascriptionCurriculum"    column="ascription_curriculum"    />
+        <result property="matchTime"    column="match_time"    />
+        <result property="processOpinion"    column="process_opinion"    />
+        <result property="processId"    column="process_id"    />
+        <result property="delFlag"    column="del_flag"    />
+        <result property="tenantId"    column="tenant_id"    />
+        <result property="revision"    column="revision"    />
+        <result property="createdBy"    column="created_by"    />
+        <result property="createdTime"    column="created_time"    />
+        <result property="updatedBy"    column="updated_by"    />
+        <result property="updatedTime"    column="updated_time"    />
+    </resultMap>
+
+    <sql id="selectPrizeDeclareVo">
+        select declare_id, applicant_id, applicant_dept, match_name, competition_category, competition_leve, professional_id, undertaker, contest_address, estimate_amount, ascription_curriculum, match_time, process_opinion, process_id, del_flag, tenant_id, revision, created_by, created_time, updated_by, updated_time from prize_declare
+    </sql>
+
+    <select id="selectPrizeDeclareList" parameterType="PrizeDeclare" resultMap="PrizeDeclareResult">
+        <include refid="selectPrizeDeclareVo"/>
+        <where>  
+            <if test="applicantId != null "> and applicant_id = #{applicantId}</if>
+            <if test="applicantDept != null  and applicantDept != ''"> and applicant_dept = #{applicantDept}</if>
+            <if test="matchName != null  and matchName != ''"> and match_name like concat('%', #{matchName}, '%')</if>
+            <if test="competitionCategory != null  and competitionCategory != ''"> and competition_category = #{competitionCategory}</if>
+            <if test="competitionLeve != null  and competitionLeve != ''"> and competition_leve = #{competitionLeve}</if>
+            <if test="professionalId != null  and professionalId != ''"> and professional_id = #{professionalId}</if>
+            <if test="undertaker != null  and undertaker != ''"> and undertaker = #{undertaker}</if>
+            <if test="contestAddress != null  and contestAddress != ''"> and contest_address = #{contestAddress}</if>
+            <if test="estimateAmount != null  and estimateAmount != ''"> and estimate_amount = #{estimateAmount}</if>
+            <if test="ascriptionCurriculum != null  and ascriptionCurriculum != ''"> and ascription_curriculum = #{ascriptionCurriculum}</if>
+            <if test="matchTime != null "> and match_time = #{matchTime}</if>
+            <if test="processOpinion != null  and processOpinion != ''"> and process_opinion = #{processOpinion}</if>
+            <if test="processId != null  and processId != ''"> and process_id = #{processId}</if>
+            <if test="tenantId != null  and tenantId != ''"> and tenant_id = #{tenantId}</if>
+            <if test="revision != null  and revision != ''"> and revision = #{revision}</if>
+            <if test="createdBy != null  and createdBy != ''"> and created_by = #{createdBy}</if>
+            <if test="createdTime != null "> and created_time = #{createdTime}</if>
+            <if test="updatedBy != null  and updatedBy != ''"> and updated_by = #{updatedBy}</if>
+            <if test="updatedTime != null "> and updated_time = #{updatedTime}</if>
+        </where>
+    </select>
+    
+    <select id="selectPrizeDeclareByDeclareId" parameterType="String" resultMap="PrizeDeclareResult">
+        <include refid="selectPrizeDeclareVo"/>
+        where declare_id = #{declareId}
+    </select>
+        
+    <insert id="insertPrizeDeclare" parameterType="PrizeDeclare">
+        insert into prize_declare
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="declareId != null">declare_id,</if>
+            <if test="applicantId != null">applicant_id,</if>
+            <if test="applicantDept != null">applicant_dept,</if>
+            <if test="matchName != null">match_name,</if>
+            <if test="competitionCategory != null">competition_category,</if>
+            <if test="competitionLeve != null">competition_leve,</if>
+            <if test="professionalId != null">professional_id,</if>
+            <if test="undertaker != null">undertaker,</if>
+            <if test="contestAddress != null">contest_address,</if>
+            <if test="estimateAmount != null">estimate_amount,</if>
+            <if test="ascriptionCurriculum != null">ascription_curriculum,</if>
+            <if test="matchTime != null">match_time,</if>
+            <if test="processOpinion != null">process_opinion,</if>
+            <if test="processId != null">process_id,</if>
+            <if test="delFlag != null">del_flag,</if>
+            <if test="tenantId != null">tenant_id,</if>
+            <if test="revision != null">revision,</if>
+            <if test="createdBy != null">created_by,</if>
+            <if test="createdTime != null">created_time,</if>
+            <if test="updatedBy != null">updated_by,</if>
+            <if test="updatedTime != null">updated_time,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="declareId != null">#{declareId},</if>
+            <if test="applicantId != null">#{applicantId},</if>
+            <if test="applicantDept != null">#{applicantDept},</if>
+            <if test="matchName != null">#{matchName},</if>
+            <if test="competitionCategory != null">#{competitionCategory},</if>
+            <if test="competitionLeve != null">#{competitionLeve},</if>
+            <if test="professionalId != null">#{professionalId},</if>
+            <if test="undertaker != null">#{undertaker},</if>
+            <if test="contestAddress != null">#{contestAddress},</if>
+            <if test="estimateAmount != null">#{estimateAmount},</if>
+            <if test="ascriptionCurriculum != null">#{ascriptionCurriculum},</if>
+            <if test="matchTime != null">#{matchTime},</if>
+            <if test="processOpinion != null">#{processOpinion},</if>
+            <if test="processId != null">#{processId},</if>
+            <if test="delFlag != null">#{delFlag},</if>
+            <if test="tenantId != null">#{tenantId},</if>
+            <if test="revision != null">#{revision},</if>
+            <if test="createdBy != null">#{createdBy},</if>
+            <if test="createdTime != null">#{createdTime},</if>
+            <if test="updatedBy != null">#{updatedBy},</if>
+            <if test="updatedTime != null">#{updatedTime},</if>
+         </trim>
+    </insert>
+
+    <update id="updatePrizeDeclare" parameterType="PrizeDeclare">
+        update prize_declare
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="applicantId != null">applicant_id = #{applicantId},</if>
+            <if test="applicantDept != null">applicant_dept = #{applicantDept},</if>
+            <if test="matchName != null">match_name = #{matchName},</if>
+            <if test="competitionCategory != null">competition_category = #{competitionCategory},</if>
+            <if test="competitionLeve != null">competition_leve = #{competitionLeve},</if>
+            <if test="professionalId != null">professional_id = #{professionalId},</if>
+            <if test="undertaker != null">undertaker = #{undertaker},</if>
+            <if test="contestAddress != null">contest_address = #{contestAddress},</if>
+            <if test="estimateAmount != null">estimate_amount = #{estimateAmount},</if>
+            <if test="ascriptionCurriculum != null">ascription_curriculum = #{ascriptionCurriculum},</if>
+            <if test="matchTime != null">match_time = #{matchTime},</if>
+            <if test="processOpinion != null">process_opinion = #{processOpinion},</if>
+            <if test="processId != null">process_id = #{processId},</if>
+            <if test="delFlag != null">del_flag = #{delFlag},</if>
+            <if test="tenantId != null">tenant_id = #{tenantId},</if>
+            <if test="revision != null">revision = #{revision},</if>
+            <if test="createdBy != null">created_by = #{createdBy},</if>
+            <if test="createdTime != null">created_time = #{createdTime},</if>
+            <if test="updatedBy != null">updated_by = #{updatedBy},</if>
+            <if test="updatedTime != null">updated_time = #{updatedTime},</if>
+        </trim>
+        where declare_id = #{declareId}
+    </update>
+
+    <delete id="deletePrizeDeclareByDeclareId" parameterType="String">
+        delete from prize_declare where declare_id = #{declareId}
+    </delete>
+
+    <delete id="deletePrizeDeclareByDeclareIds" parameterType="String">
+        delete from prize_declare where declare_id in 
+        <foreach item="declareId" collection="array" open="(" separator="," close=")">
+            #{declareId}
+        </foreach>
+    </delete>
+
+</mapper>
